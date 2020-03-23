@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script src="~/js/daypilot-all.min.js" type="text/javascript"></script>
+
+<div id="dp"></div>
+<script type="text/javascript">
+
+    var dp = new DayPilot.Calendar("dp");
+
+    dp.startDate = "2020-03-11";
+    dp.viewType = "Week";
+    dp.durationBarVisible = false;
+
+    dp.events.list = [
+        {
+            "start": "2020-03-11T10:00:00",
+            "end": "2020-03-11T13:00:00",
+            "id": "29b7a553-d44f-8f2c-11e1-a7d5f62eb123",
+            "text": "Event 1",
+            "backColor": "#B6D7A8",
+            "borderColor": "#6AA84F"
+        },
+        {
+            "start": "2020-03-11T14:00:00",
+            "end": "2020-03-11T17:00:00",
+            "id": "ff968cfb-eba1-8dc1-7396-7f0d4f465c8a",
+            "text": "Event 2",
+            "backColor": "#EA9999",
+            "borderColor": "#CC0000",
+            "tags": {
+                "type": "important"
+            }
+        }
+    ];
+
+    dp.onBeforeEventRender = function (args) {
+        if (args.data.tags && args.data.tags.type === "important") {
+            args.data.html = "<b>Important Event</b><br>" + args.data.text;
+            args.data.fontColor = "#fff";
+            args.data.backColor = "#E06666";
+        }
+    };
+
+    dp.init();
+
+
+</script>
