@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>BitcoGG-API</RootNamespace>
+    <RootNamespace>BitcoGG_API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
