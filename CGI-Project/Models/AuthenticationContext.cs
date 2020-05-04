@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BitcoGG_API.Models
 {
-    public class AuthenticationContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
-        public AuthenticationContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
         }

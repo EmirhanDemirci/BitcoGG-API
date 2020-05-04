@@ -27,7 +27,7 @@ namespace BitcoGG_API.Controllers
        [HttpGet]
         public async Task<IActionResult> GetCoins()
         {
-             Coins.RootObject reservationList = new Coins.RootObject();
+            Coins.RootObject reservationList = new Coins.RootObject();
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", API_KEY);

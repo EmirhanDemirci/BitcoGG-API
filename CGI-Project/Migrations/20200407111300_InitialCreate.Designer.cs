@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BitcoGG_API.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
-    [Migration("20200311092215_InitalCreate")]
-    partial class InitalCreate
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20200407111300_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,14 +223,14 @@ namespace BitcoGG_API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CGI_Project.Models.User", b =>
+            modelBuilder.Entity("BitcoGG_API.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(150)");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -35,10 +35,10 @@ namespace BitcoGG_API
 
             services.AddControllers();
             //Making connection with the database inside the appsettings.json
-            services.AddDbContext<AuthenticationContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
-               .AddEntityFrameworkStores<AuthenticationContext>();
+               .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<IdentityOptions>(options =>
                 {
