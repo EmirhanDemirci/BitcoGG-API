@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BitcoGG_API.Models
 {
+    [NotMapped]
     public class Status
     {
         public DateTime timestamp { get; set; }

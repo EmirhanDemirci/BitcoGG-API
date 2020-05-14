@@ -5,10 +5,12 @@ using System.Text;
 
 namespace BitcoGG_API.Models
 {
-    [NotMapped]
-    public class JwtUser
+    public class Wallet
     {
+        public int WalletId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
-        public string Token { get; set; }
+        public string TotalValue { get; set; }
+        public List<Coin> Coins { get; set; }
     }
 }

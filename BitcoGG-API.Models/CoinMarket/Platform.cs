@@ -1,5 +1,8 @@
-﻿namespace BitcoGG_API.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BitcoGG_API.Models
 {
+    [NotMapped]
     public class Platform
     {
         public int id { get; set; }

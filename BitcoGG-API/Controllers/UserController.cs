@@ -9,6 +9,7 @@ using BitcoGG_API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace BitcoGG_API.Controllers
@@ -35,7 +36,7 @@ namespace BitcoGG_API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new {message = e.Message });
+                return BadRequest(new { message = e.Message });
             }
         }
 
@@ -52,6 +53,7 @@ namespace BitcoGG_API.Controllers
                 }
 
                 jwtUser.User = jwtUser.User.WithoutPassword();
+                jwtUser.User = jwtUser.User.WithoutAdmin();
                 return Ok(jwtUser);
             }
             return BadRequest();
@@ -66,6 +68,21 @@ namespace BitcoGG_API.Controllers
                 return BadRequest();
             }
             return Ok(user.WithoutPassword());
+        }
+
+        [HttpGet( "{id}/all")]
+        //[Authorize(Policy = "Admin")]
+        public IActionResult GetAll(int id)
+        {
+            var service = _userService.GetAll(id);
+            return Ok(service);
+        }
+
+        [HttpPost ("{id}/delete")]
+        public IActionResult Delete([FromBody] int selectedId, int id)
+        {
+            _userService.Delete(selectedId, id);
+            return Ok();
         }
     }
 }

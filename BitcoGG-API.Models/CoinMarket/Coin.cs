@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BitcoGG_API.Models
 {
+    [NotMapped]
     public class Coin
     {
         public int id { get; set; }

@@ -31,8 +31,6 @@ namespace BitcoGG_API
             new DbInstaller().InstallServices(services, Configuration);
             new JWTInstaller().InstallServices(services, Configuration);
             new ServiceInstaller().InstallServices(services, Configuration);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,5 +19,9 @@ namespace BitcoGG_API.Models
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+        [Required]
+        public int IsAdmin { get; set; }
+
+        public Wallet Wallet { get; set; }
     }
 }

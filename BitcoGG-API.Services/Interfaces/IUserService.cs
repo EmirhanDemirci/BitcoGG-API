@@ -10,5 +10,7 @@ namespace BitcoGG_API.Services.Interfaces
         void Create(User user);
         JwtUser Authenticate(string username, string password);
         User Get(int id);
+        List<User> GetAll(int id);
+        void Delete(int selectedId, int id);
     }
 }

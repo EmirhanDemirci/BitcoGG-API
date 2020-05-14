@@ -27,5 +27,12 @@ namespace BitcoGG_API.Services
             var specificCoin = await _coinMarket.GetSpecificCoin(id);
             return specificCoin;
         }
+
+        public async Task<Wallet> GetWallet()
+        {
+            //TODO: Wallet maken
+            return null;
+
+        }
     }
 }

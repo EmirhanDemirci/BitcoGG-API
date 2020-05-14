@@ -23,6 +23,7 @@ namespace BitcoGG_API.Composition.Installer
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
@@ -35,6 +36,10 @@ namespace BitcoGG_API.Composition.Installer
                     ValidateAudience = false,
                 };
             });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin"));
+            //});
         }
     }
 }

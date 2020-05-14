@@ -18,5 +18,12 @@ namespace BitcoGG_API.Services.Helpers
             user.Password = null;
             return user;
         }
+
+        //The user can't see who the admin is
+        public static User WithoutAdmin(this User user)
+        {
+            user.IsAdmin = 0;
+            return user;
+        }
     }
 }

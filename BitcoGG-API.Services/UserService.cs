@@ -19,6 +19,7 @@ namespace BitcoGG_API.Services
         {
             _dbContext = dbContext;
         }
+        //Service to create a user
         public void Create(User user)
         {
             var dbUser = _dbContext.Users.FirstOrDefault(x => x.UserName == user.UserName);
@@ -35,6 +36,7 @@ namespace BitcoGG_API.Services
             
         }
 
+        //Service to authenticate a user
         public JwtUser Authenticate(string username, string password)
         {
             //TODO: Change hardcoded JWTKey
@@ -55,7 +57,8 @@ namespace BitcoGG_API.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("Id", user.Id.ToString())
+                    new Claim("Id", user.Id.ToString()),
+                    new Claim("IsAdmin", user.IsAdmin.ToString()) 
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(
@@ -71,7 +74,7 @@ namespace BitcoGG_API.Services
             jwtUser.User = user;
             return jwtUser;
         }
-
+        //Service to get a specific user
         public User Get(int id)
         {
             if (id != 0)
@@ -80,6 +83,39 @@ namespace BitcoGG_API.Services
                 return user;
             } 
             return null;
+        }
+
+        //Service to get all users
+        public List<User> GetAll(int id)
+        {
+            if (id != 0)
+            {
+                var user = _dbContext.Users.Find(id);
+                if (user != null && user.IsAdmin == 1)
+                {
+                    var users = _dbContext.Users.ToList();
+                    return users;
+                }
+            }
+            return null;
+        }
+
+        //Service to delete a user
+        public void Delete(int selectedId, int id)
+        {
+            if (selectedId != 0 && id != 0)
+            {
+                var user = _dbContext.Users.Find(id);
+                if (user != null && user.IsAdmin == 1)
+                {
+                    var userToBeDeleted = _dbContext.Users.Find(selectedId);
+                    if (userToBeDeleted != null)
+                    {
+                        _dbContext.Users.Remove(userToBeDeleted);
+                        _dbContext.SaveChanges();
+                    }
+                }
+            }   
         }
     }
 }

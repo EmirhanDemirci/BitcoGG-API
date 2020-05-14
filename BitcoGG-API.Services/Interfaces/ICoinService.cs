@@ -10,5 +10,6 @@ namespace BitcoGG_API.Services.Interfaces
     {
         Task<RootObject> GetCoins();
         Task<RootObject> GetSpecificCoin(int id);
+        Task<Wallet> GetWallet();
     }
 }
