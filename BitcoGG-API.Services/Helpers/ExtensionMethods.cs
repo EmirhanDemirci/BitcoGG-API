@@ -12,7 +12,7 @@ namespace BitcoGG_API.Services.Helpers
         {
             return users.Select(x => x.WithoutPassword());
         }
-
+        //The user can't see what the password is'
         public static User WithoutPassword(this User user)
         {
             user.Password = null;

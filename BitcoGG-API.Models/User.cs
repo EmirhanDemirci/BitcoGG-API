@@ -23,5 +23,7 @@ namespace BitcoGG_API.Models
         public int IsAdmin { get; set; }
 
         public Wallet Wallet { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
     }
 }

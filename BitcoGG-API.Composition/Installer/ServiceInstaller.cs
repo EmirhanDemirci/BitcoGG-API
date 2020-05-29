@@ -15,6 +15,7 @@ namespace BitcoGG_API.Composition.Installer
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICoinService, CoinService>();
+            services.AddScoped<IFileService, FileService>();
         }
     }
 }

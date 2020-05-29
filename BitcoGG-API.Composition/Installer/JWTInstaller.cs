@@ -36,10 +36,6 @@ namespace BitcoGG_API.Composition.Installer
                     ValidateAudience = false,
                 };
             });
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Admin", policy => policy.RequireClaim("IsAdmin"));
-            //});
         }
     }
 }

@@ -52,15 +52,18 @@ namespace BitcoGG_API.Services
             {
                 return null;
             }
-        
+            
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                //Making claims for the Jwt token. So if I decode the token I could find these data
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Id", user.Id.ToString()),
                     new Claim("IsAdmin", user.IsAdmin.ToString()) 
                 }),
+                //how long the token is valid
                 Expires = DateTime.UtcNow.AddDays(1),
+                //Creating a securityToken with the "HmacSha256" algorithm
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
                     SecurityAlgorithms.HmacSha256)
@@ -79,6 +82,7 @@ namespace BitcoGG_API.Services
         {
             if (id != 0)
             {
+                //Query to get the specific user
                 var user = _dbContext.Users.Find(id);
                 return user;
             } 
@@ -93,6 +97,7 @@ namespace BitcoGG_API.Services
                 var user = _dbContext.Users.Find(id);
                 if (user != null && user.IsAdmin == 1)
                 {
+                    //Query to get all the users
                     var users = _dbContext.Users.ToList();
                     return users;
                 }
@@ -111,6 +116,7 @@ namespace BitcoGG_API.Services
                     var userToBeDeleted = _dbContext.Users.Find(selectedId);
                     if (userToBeDeleted != null)
                     {
+                        //Query to delete the user
                         _dbContext.Users.Remove(userToBeDeleted);
                         _dbContext.SaveChanges();
                     }
