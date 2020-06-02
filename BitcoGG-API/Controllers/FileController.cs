@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using BitcoGG_API.Services;
 using BitcoGG_API.Services.Interfaces;
@@ -22,7 +25,7 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpPost("upload/{id}")]
-        public async Task <IActionResult> Upload([FromForm(Name = "file")] IFormFile file, int id)
+        public async Task <IActionResult> Upload([FromForm(Name = "file")] IFormFile file, int id)  
         {
             using (var memoryStream = new MemoryStream())
             {

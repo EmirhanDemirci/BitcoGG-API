@@ -12,5 +12,6 @@ namespace BitcoGG_API.Services.Interfaces
         User Get(int id);
         List<User> GetAll(int id);
         void Delete(int selectedId, int id);
+        void CreateWallet(Wallet wallet);
     }
 }

@@ -123,5 +123,20 @@ namespace BitcoGG_API.Services
                 }
             }   
         }
+
+        //Service to create a wallet
+        public void CreateWallet(Wallet wallet)
+        {
+            var dbUser = _dbContext.Wallet.FirstOrDefault(x => x.UserId == wallet.UserId);
+            if (dbUser == null)
+            {
+                _dbContext.Wallet.Add(wallet);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new UserAlreadyExistsException("Wallet already exists");
+            }
+        }
     }
 }

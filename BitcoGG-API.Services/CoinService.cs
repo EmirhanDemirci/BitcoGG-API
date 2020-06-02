@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BitcoGG_API.DataAccess.Data;
 using BitcoGG_API.Models;
+using BitcoGG_API.Models.CoinsNews;
 using BitcoGG_API.Services.Interfaces;
 
 namespace BitcoGG_API.Services
@@ -27,12 +28,10 @@ namespace BitcoGG_API.Services
             var specificCoin = await _coinMarket.GetSpecificCoin(id);
             return specificCoin;
         }
-
-        public async Task<Wallet> GetWallet()
+        public async Task<CoinsNews> GetNews()
         {
-            //TODO: Wallet maken
-            return null;
-
+            var cryptoNews = await _coinMarket.GetNews();
+            return cryptoNews;
         }
     }
 }
