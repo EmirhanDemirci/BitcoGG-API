@@ -38,12 +38,5 @@ namespace BitcoGG_API.Controllers
             var news = await _coinService.GetNews();
             return Ok(news);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> PurchaseCoin(int id, int coinId)
-        {
-            var purchased = await _coinService.PurchaseCoin(id, coinId);
-            return Ok(purchased);
-        }
     }
 }

@@ -31,7 +31,7 @@ namespace BitcoGG_API.Services
             }
             else
             {
-                throw new UserAlreadyExistsException("User already exists");
+                throw new AlreadyExistsException("User already exists");
             }
             
         }
@@ -59,7 +59,7 @@ namespace BitcoGG_API.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Id", user.Id.ToString()),
-                    new Claim("IsAdmin", user.IsAdmin.ToString()) 
+                    new Claim("IsAdmin", user.IsAdmin.ToString())
                 }),
                 //how long the token is valid
                 Expires = DateTime.UtcNow.AddDays(1),
@@ -116,18 +116,30 @@ namespace BitcoGG_API.Services
                     var userToBeDeleted = _dbContext.Users.Find(selectedId);
                     if (userToBeDeleted != null)
                     {
-                        //Query to delete the user
                         _dbContext.Users.Remove(userToBeDeleted);
                         _dbContext.SaveChanges();
                     }
                 }
-            }   
+            }
         }
 
-        //Service to create a wallet
-        public void CreateWallet(Wallet wallet)
+        public void DeleteWallet(Wallet wallet, int id)
         {
-            var dbUser = _dbContext.Wallet.FirstOrDefault(x => x.UserId == wallet.UserId);
+            if (id != 0)
+            {
+                var userWithWallet = _dbContext.Wallet.Find(id);
+                if (userWithWallet != null)
+                {
+                    _dbContext.Wallet.Remove(wallet);
+                    _dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void CreateWallet(Wallet wallet, int id)
+        {
+            var dbUser = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
+
             if (dbUser == null)
             {
                 _dbContext.Wallet.Add(wallet);
@@ -135,7 +147,56 @@ namespace BitcoGG_API.Services
             }
             else
             {
-                throw new UserAlreadyExistsException("Wallet already exists");
+                throw new AlreadyExistsException("Wallet already exists already exists");
+            }
+        }
+
+        public void PurchaseCoin(PurchasedCoin purchaseCoin, int id)
+        {
+            var checkWallet = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
+            if (checkWallet == null)
+            {
+                throw new AlreadyExistsException("You have no wallet");
+            }
+            purchaseCoin.WalletId = checkWallet.WalletId;
+            purchaseCoin.TotalValue = Convert.ToInt32(purchaseCoin.Quantity * purchaseCoin.Price);
+            _dbContext.PurchasedCoin.Add(purchaseCoin);
+            _dbContext.SaveChanges();
+        }
+
+        public List<PurchasedCoin> GetPurchasedCoin(int id)
+        {
+            List<PurchasedCoin> purchased = new List<PurchasedCoin>();
+            var checkWallet = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
+            var checkCoin = _dbContext.PurchasedCoin.Where(x => x.WalletId == checkWallet.WalletId);
+            purchased.AddRange(checkCoin);
+            return purchased;
+        }
+
+        public void UpdatePurchasedCoin(int selectedId, int id, int quantity)
+        {
+            if (selectedId != 0 && id != 0)
+            {
+                var user = _dbContext.Users.Find(id);
+                if (user != null)
+                {
+                    var userToBeDeleted = _dbContext.PurchasedCoin.Find(selectedId);
+                    if (userToBeDeleted != null)
+                    {
+                        
+                        if (userToBeDeleted.Quantity == 0)
+                        {
+                            _dbContext.Remove(userToBeDeleted);
+                            _dbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            _dbContext.PurchasedCoin.Update(userToBeDeleted);
+                            userToBeDeleted.TotalValue = Convert.ToInt32(userToBeDeleted.Price) * userToBeDeleted.Quantity;
+                            _dbContext.SaveChanges();
+                        }
+                    }
+                }
             }
         }
     }

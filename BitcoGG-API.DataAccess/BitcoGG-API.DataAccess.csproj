@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200603143304_foreignKey.cs" />
+    <Compile Remove="Migrations\20200603143304_foreignKey.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BitcoGG-API.Models\BitcoGG-API.Models.csproj" />
   </ItemGroup>
 

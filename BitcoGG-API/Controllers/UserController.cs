@@ -58,7 +58,6 @@ namespace BitcoGG_API.Controllers
             }
             return BadRequest();
         }
-
         [HttpGet]
         public IActionResult Get(int id)
         {
@@ -78,10 +77,65 @@ namespace BitcoGG_API.Controllers
             return Ok(service);
         }
 
-        [HttpPost ("{id}/delete")]
+        [HttpPost("{id}/delete")]
         public IActionResult Delete([FromBody] int selectedId, int id)
         {
             _userService.Delete(selectedId, id);
+            return Ok();
+        }
+
+        [HttpPost("{id}/CreateWallet")]
+        public IActionResult CreateWallet(Wallet wallet, int id)
+        {
+            try
+            {
+                wallet.UserId = id;
+                _userService.CreateWallet(wallet, id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpPost("{id}/DeleteWallet")]
+        public IActionResult DeleteWallet([FromBody] Wallet wallet, int id)
+        {
+            try
+            {
+                _userService.DeleteWallet(wallet, id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new {message = e.Message});
+            }
+        }
+        [HttpPost("{Id}/PurchaseCoin")]
+        public IActionResult PurchaseCoin([FromBody] PurchasedCoin purchasedCoin, int Id)
+        {
+            try
+            {
+                _userService.PurchaseCoin(purchasedCoin, Id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpGet("{id}/GetUserWallet")]
+        //[Authorize(Policy = "Admin")]
+        public IActionResult GetPurchasedCoin(int id)
+        {
+            var service = _userService.GetPurchasedCoin(id);
+            return Ok(service);
+        }
+        [HttpPost("{id}/UpdatePurchasedCoin")]
+        //[Authorize(Policy = "Admin")]
+        public IActionResult UpdatePurchasedCoin([FromBody] int selectedId, int id, int quantity)
+        {
+            _userService.UpdatePurchasedCoin(selectedId, id, quantity);
             return Ok();
         }
     }

@@ -27,7 +27,7 @@ namespace BitcoGG_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             new DbInstaller().InstallServices(services, Configuration);
             new JWTInstaller().InstallServices(services, Configuration);
             new ServiceInstaller().InstallServices(services, Configuration);

@@ -4,18 +4,18 @@ using System.Text;
 
 namespace BitcoGG_API.Services.Helpers
 {
-    public class UserAlreadyExistsException : Exception
+    public class AlreadyExistsException : Exception
     {
-        public UserAlreadyExistsException()
+        public AlreadyExistsException()
         {
         }
 
-        public UserAlreadyExistsException(string message)
+        public AlreadyExistsException(string message)
                 :base(message)
         {
         }
 
-        public UserAlreadyExistsException(string message, Exception inner)
+        public AlreadyExistsException(string message, Exception inner)
                 :base(message, inner)
         {
         }

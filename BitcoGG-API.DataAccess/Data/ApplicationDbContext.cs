@@ -15,5 +15,6 @@ namespace BitcoGG_API.DataAccess.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallet { get; set; }
+        public DbSet<PurchasedCoin> PurchasedCoin { get; set; }
     }
 }
