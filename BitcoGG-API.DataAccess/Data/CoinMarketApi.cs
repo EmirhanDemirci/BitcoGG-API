@@ -25,7 +25,14 @@ namespace BitcoGG_API.DataAccess.Data
                     await httpClient.GetAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    reservationList = JsonConvert.DeserializeObject<RootObject>(apiResponse);
+
+                    var settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+
+                    reservationList = JsonConvert.DeserializeObject<RootObject>(apiResponse, settings);
                 }
             }
 

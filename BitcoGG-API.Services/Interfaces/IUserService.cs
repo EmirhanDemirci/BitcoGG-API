@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using BitcoGG_API.Models;
-using BitcoGG_API.Models.ViewModels;
 
 namespace BitcoGG_API.Services.Interfaces
 {
