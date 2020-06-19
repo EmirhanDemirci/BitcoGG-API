@@ -20,16 +20,19 @@ namespace BitcoGG_API.Services
         
         public async Task<RootObject> GetCoins()
         {
+            //Get all the coins
             var coins =await _coinMarket.GetCoins();
             return coins;
         }
         public async Task<RootObject> GetSpecificCoin(int id)
         {
+            //Get the specific coin
             var specificCoin = await _coinMarket.GetSpecificCoin(id);
             return specificCoin;
         }
         public async Task<CoinsNews> GetNews()
         {
+            //Gets all the news
             var cryptoNews = await _coinMarket.GetNews();
             return cryptoNews;
         }

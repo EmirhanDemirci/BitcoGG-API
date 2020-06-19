@@ -27,6 +27,7 @@ namespace BitcoGG_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
+        //Register
         public IActionResult Register(User user)
         {
             try
@@ -42,6 +43,7 @@ namespace BitcoGG_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
+        //Login
         public IActionResult Login(LoginUser user)
         {
             if (user.Username != "" && user.Password != "")
@@ -59,6 +61,7 @@ namespace BitcoGG_API.Controllers
             return BadRequest();
         }
         [HttpGet]
+        //Get user
         public IActionResult Get(int id)
         {
             var user = _userService.Get(id);
@@ -70,7 +73,7 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpGet( "{id}/all")]
-        //[Authorize(Policy = "Admin")]
+        //Get all users
         public IActionResult GetAll(int id)
         {
             var service = _userService.GetAll(id);
@@ -78,6 +81,7 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpPost("{id}/delete")]
+        //Delete user
         public IActionResult Delete([FromBody] int selectedId, int id)
         {
             _userService.Delete(selectedId, id);
@@ -85,6 +89,7 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpPost("{id}/CreateWallet")]
+        //Create wallet
         public IActionResult CreateWallet(Wallet wallet, int id)
         {
             try
@@ -99,6 +104,7 @@ namespace BitcoGG_API.Controllers
             }
         }
         [HttpPost("{id}/DeleteWallet")]
+        //Delete wallet
         public IActionResult DeleteWallet([FromBody] Wallet wallet, int id)
         {
             try
@@ -112,6 +118,7 @@ namespace BitcoGG_API.Controllers
             }
         }
         [HttpPost("{Id}/PurchaseCoin")]
+        //Purchase a coin
         public IActionResult PurchaseCoin([FromBody] PurchasedCoin purchasedCoin, int Id)
         {
             try
@@ -125,14 +132,22 @@ namespace BitcoGG_API.Controllers
             }
         }
         [HttpGet("{id}/GetUserWallet")]
-        //[Authorize(Policy = "Admin")]
+        //Get the users wallet
         public IActionResult GetPurchasedCoin(int id)
         {
-            var service = _userService.GetPurchasedCoin(id);
-            return Ok(service);
+            try
+            {
+                var service = _userService.GetPurchasedCoin(id);
+                return Ok(service);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+            
         }
         [HttpPost("{id}/UpdatePurchasedCoin")]
-        //[Authorize(Policy = "Admin")]
+        //update purchased coin (Not working!)
         public IActionResult UpdatePurchasedCoin([FromBody] int selectedId, int id, int quantity)
         {
             _userService.UpdatePurchasedCoin(selectedId, id, quantity);

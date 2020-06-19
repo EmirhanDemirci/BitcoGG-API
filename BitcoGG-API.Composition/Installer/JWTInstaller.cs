@@ -13,7 +13,6 @@ namespace BitcoGG_API.Composition.Installer
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            //TODO: Change hardcoded JWTKey
             var JwtKey = "1234567890123456";
             //JWT authentication
             var key = Encoding.UTF8.GetBytes(JwtKey);

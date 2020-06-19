@@ -12,9 +12,8 @@ namespace BitcoGG_API.DataAccess.Data
 {
     public class CoinMarketApi
     {
-        //TODO: Change hardcoded KEY;
         private static string API_KEY = "e59bd4f0-b6d4-4750-a58c-7c4357a6534f";
-
+        //Get all the coins from api
         public async Task<RootObject> GetCoins()
         {
             RootObject reservationList = new RootObject();
@@ -32,7 +31,7 @@ namespace BitcoGG_API.DataAccess.Data
 
             return reservationList;
         }
-
+        //Get a specific coin from api
         public async Task<RootObject> GetSpecificCoin(int id)
         {
             var URL = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
@@ -54,7 +53,7 @@ namespace BitcoGG_API.DataAccess.Data
 
             return specificCoin;
         }
-
+        //Get news from api
         public async Task<CoinsNews> GetNews()
         {
             CoinsNews GetCoinsNews = new CoinsNews();

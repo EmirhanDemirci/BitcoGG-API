@@ -13,6 +13,7 @@ namespace BitcoGG_API.Composition.Installer
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            //installing all the services in the api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICoinService, CoinService>();
             services.AddScoped<IFileService, FileService>();

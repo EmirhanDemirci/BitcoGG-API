@@ -1,14 +1,14 @@
-﻿using System;
+﻿using BitcoGG_API.DataAccess.Data;
+using BitcoGG_API.Models;
+using BitcoGG_API.Services.Helpers;
+using BitcoGG_API.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using BitcoGG_API.DataAccess.Data;
-using BitcoGG_API.Models;
-using BitcoGG_API.Services.Helpers;
-using BitcoGG_API.Services.Interfaces;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BitcoGG_API.Services
 {
@@ -39,9 +39,9 @@ namespace BitcoGG_API.Services
         //Service to authenticate a user
         public JwtUser Authenticate(string username, string password)
         {
-            //TODO: Change hardcoded JWTKey
             var jwtKey = "1234567890123456";
             var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
+            var wallet = _dbContext.Wallet.FirstOrDefault();
 
             if (user == null)
             {
@@ -59,7 +59,8 @@ namespace BitcoGG_API.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("Id", user.Id.ToString()),
-                    new Claim("IsAdmin", user.IsAdmin.ToString())
+                    new Claim("IsAdmin", user.IsAdmin.ToString()),
+                    new Claim("HasWallet", wallet.WalletId.ToString()) 
                 }),
                 //how long the token is valid
                 Expires = DateTime.UtcNow.AddDays(1),
@@ -122,7 +123,7 @@ namespace BitcoGG_API.Services
                 }
             }
         }
-
+        //Service to delete a wallet
         public void DeleteWallet(Wallet wallet, int id)
         {
             if (id != 0)
@@ -135,7 +136,7 @@ namespace BitcoGG_API.Services
                 }
             }
         }
-
+        //Service to create a wallet
         public void CreateWallet(Wallet wallet, int id)
         {
             var dbUser = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
@@ -147,10 +148,10 @@ namespace BitcoGG_API.Services
             }
             else
             {
-                throw new AlreadyExistsException("Wallet already exists already exists");
+                throw new AlreadyExistsException("You already have a wallet");
             }
         }
-
+        //Service to purchase a coin
         public void PurchaseCoin(PurchasedCoin purchaseCoin, int id)
         {
             var checkWallet = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
@@ -163,16 +164,20 @@ namespace BitcoGG_API.Services
             _dbContext.PurchasedCoin.Add(purchaseCoin);
             _dbContext.SaveChanges();
         }
-
+        //Service to get the purchased coin
         public List<PurchasedCoin> GetPurchasedCoin(int id)
         {
             List<PurchasedCoin> purchased = new List<PurchasedCoin>();
             var checkWallet = _dbContext.Wallet.FirstOrDefault(x => x.UserId == id);
-            var checkCoin = _dbContext.PurchasedCoin.Where(x => x.WalletId == checkWallet.WalletId);
+            var checkCoin = _dbContext.PurchasedCoin.Where(x => x.WalletId == checkWallet.WalletId);    
+            if (checkWallet == null)
+            {
+                throw new AlreadyExistsException("You have no wallet or did not purchase any coin, Purchase first!");
+            }
             purchased.AddRange(checkCoin);
             return purchased;
         }
-
+        //Service to update the purchased coin
         public void UpdatePurchasedCoin(int selectedId, int id, int quantity)
         {
             if (selectedId != 0 && id != 0)

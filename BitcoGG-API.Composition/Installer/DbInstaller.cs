@@ -13,7 +13,6 @@ namespace BitcoGG_API.Composition.Installer
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            //TODO: Change hardcoded Connectionstring
             var connectionString = "Server=tcp:bitcogg.database.windows.net,1433;Initial Catalog=BitcoGG;Persist Security Info=False;User ID=emirhan75;Password=Kilever2000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddTransient<ApplicationDbContext>()
                 .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(

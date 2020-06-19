@@ -17,7 +17,7 @@ namespace BitcoGG_API.Services
         {
             _dbContext = dbContext;
         }
-
+        //Upload picture (not working)
         public void Upload(int id, byte[] picture)
         {
             if (id == 0)

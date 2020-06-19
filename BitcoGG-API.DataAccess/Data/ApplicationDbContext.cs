@@ -12,9 +12,11 @@ namespace BitcoGG_API.DataAccess.Data
             : base(options)
         {
         }
-
+        //Create Users table
         public DbSet<User> Users { get; set; }
+        //Create Wallet table
         public DbSet<Wallet> Wallet { get; set; }
+        //Create PurchasedCoin table
         public DbSet<PurchasedCoin> PurchasedCoin { get; set; }
     }
 }

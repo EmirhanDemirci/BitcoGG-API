@@ -20,6 +20,7 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpGet]
+        //Get coins from api
         public async Task<IActionResult> Get()
         {
             var coins = await _coinService.GetCoins();
@@ -27,12 +28,14 @@ namespace BitcoGG_API.Controllers
         }
 
         [HttpGet("{id}")]
+        //Get specific coin
         public async Task<IActionResult> GetSpecific(int id)
         {
             var coins = await _coinService.GetSpecificCoin(id);
             return Ok(coins);
         }
         [HttpGet("News")]
+        //Get the news from api
         public async Task<IActionResult> GetNews()
         {
             var news = await _coinService.GetNews();
